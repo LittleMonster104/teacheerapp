@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --paper: #eef1ea;
+    --paper-deep: #b0c6b3;
+    --paper-card: #f7f8f3;
+    --ink: #141a13;
+    --ink-soft: #4c554b;
+    --ink-faint: #8b9488;
+    --vermilion: #db3356;
+    --line: #141a13;
+
+    --background: 80 14% 93%;
+    --foreground: 120 14% 9%;
+    --card: 70 20% 96%;
+    --card-foreground: 120 14% 9%;
+    --popover: 70 20% 96%;
+    --popover-foreground: 120 14% 9%;
+    --primary: 120 14% 9%;
+    --primary-foreground: 80 14% 93%;
+    --secondary: 110 12% 82%;
+    --secondary-foreground: 120 14% 9%;
+    --muted: 110 10% 85%;
+    --muted-foreground: 110 6% 40%;
+    --accent: 346 69% 53%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 346 69% 53%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 120 14% 9%;
+    --input: 120 14% 9%;
+    --ring: 346 69% 53%;
+    --radius: 0.25rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply text-foreground antialiased;
+    background-color: var(--paper);
+    font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    /* 稿纸格线：模拟教研手账的纸面 */
+    background-image:
+      linear-gradient(to right, rgba(20, 26, 19, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(20, 26, 19, 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  ::selection {
+    background: var(--vermilion);
+    color: #fff;
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(20, 26, 19, 0.35);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(20, 26, 19, 0.55);
+  }
+}
+
+@layer utilities {
+  .font-serif-cn {
+    font-family: "Noto Serif SC", "Source Han Serif SC", "Source Han Serif CN", "Songti SC", "STSong", "SimSun", serif;
+  }
+  .text-ink { color: var(--ink); }
+  .text-ink-soft { color: var(--ink-soft); }
+  .text-ink-faint { color: var(--ink-faint); }
+  .text-vermilion { color: var(--vermilion); }
+  .bg-paper { background-color: var(--paper); }
+  .bg-paper-deep { background-color: var(--paper-deep); }
+  .bg-paper-card { background-color: var(--paper-card); }
+  .bg-ink { background-color: var(--ink); }
+  .bg-vermilion { background-color: var(--vermilion); }
+  .border-ink { border-color: var(--ink); }
+  .border-ink-soft { border-color: rgba(20, 26, 19, 0.25); }
+
+  /* 手账卡片：细墨线边框 + 直角 + 硬投影 */
+  .ledger-card {
+    background: var(--paper-card);
+    border: 1px solid var(--ink);
+    box-shadow: 4px 4px 0 rgba(20, 26, 19, 0.9);
+  }
+  .ledger-card-flat {
+    background: var(--paper-card);
+    border: 1px solid var(--ink);
+  }
+  .ledger-hover {
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .ledger-hover:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 rgba(20, 26, 19, 0.9);
+  }
+
+  /* 章节编号标签 */
+  .section-tag {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    font-weight: 600;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+  }
+
+  /* 词级入场动画 */
+  .reveal-mask {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+  }
+  .reveal-word {
+    display: inline-block;
+    animation: rise-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes rise-in {
+    from { transform: translateY(110%) rotate(3deg); opacity: 0; }
+    to { transform: translateY(0) rotate(0deg); opacity: 1; }
+  }
+
+  /* 打字光标 */
+  .typing-caret::after {
+    content: "▍";
+    color: var(--vermilion);
+    animation: caret-blink 0.9s steps(2) infinite;
+  }
+  @keyframes caret-blink {
+    50% { opacity: 0; }
+  }
+
+  /* 跑马灯 */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 28s linear infinite;
+  }
+  @keyframes marquee {
+    to { transform: translateX(-50%); }
+  }
+
+  /* 虚线分隔（手账裁切线） */
+  .dash-line {
+    background-image: linear-gradient(to right, var(--ink) 40%, transparent 40%);
+    background-size: 8px 1px;
+    background-repeat: repeat-x;
+    height: 1px;
+    opacity: 0.35;
+  }
+}
